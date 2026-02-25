@@ -180,20 +180,21 @@ The theme is included in the ui as follows:
 ## Build Phases
 
 ### Phase 1 — Data foundation
-- [ ] Probe ESPN API endpoints, confirm 2026 Winter Olympics data availability
-- [ ] Write `fetch_data.R`: API calls, error handling, caching
-- [ ] Write `data_helpers.R`: tidy raw JSON into clean data frames
-- [ ] Confirm female athlete filtering is possible from the data
+- [ x ] Probe ESPN API endpoints, confirm 2026 Winter Olympics data availability
+- [ x ] Write `fetch_data.R`: API calls, error handling, caching
+- [ x ] Write `data_helpers.R`: tidy raw JSON into clean data frames
+- [ x ] Confirm female athlete filtering is possible from the data
 
 ### Phase 2 — SCSS + theme setup
 - [ ] Set up `www/` folder with all partials
 - [ ] Define color tokens and typography in `_variables.scss`
 - [ ] Configure `bs_theme()` in `app.R` using custom Sass files
 - [ ] Compile and verify custom CSS loads correctly in a bare Shiny app
+- [ ] Put some boilerplate code in app.R with a variety of (empty) elements: headers, simple paragraph, simple value box
 
 ### Phase 3 — Layout and navigation
 - [ ] Build `page_navbar()` structure with custom styling
-- [ ] Create hero section for the Home view
+- [ ] Create hero section for the Home view with summary value boxes wired up to data from ESPN
 - [ ] Establish responsive grid using bslib's layout system
 
 ### Phase 4 — Medal Table view

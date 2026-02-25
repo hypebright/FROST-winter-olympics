@@ -1,4 +1,4 @@
-# FROST — Female Records Of Snow & Triumph
+# FROST — Female Records & Olympic Stats Tracker
 
 R Shiny dashboard covering female athlete performance at the 2026 Winter Olympics (Milan-Cortina). Data from ESPN's public API. Designed to look nothing like a default Shiny app.
 

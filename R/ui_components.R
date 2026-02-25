@@ -15,14 +15,24 @@ frost_hero_ui <- function() {
       lapply(seq_len(25), function(i) tags$span())
     ),
 
-    # Hero content
+    # Hero content — contains only the static text so its height is fixed and
+    # flexbox centering never moves when the stats load below.
     tags$div(
       class = "frost-hero-content",
-      tags$p(class = "frost-hero-eyebrow", "Milan-Cortina \u00b7 February 2026"),
+      tags$p(
+        class = "frost-hero-eyebrow",
+        "Milan-Cortina \u00b7 February 2026"
+      ),
       tags$h1(class = "frost-hero-title", "FROST"),
-      tags$p(class = "frost-hero-tagline", "Female Records Of Snow & Triumph"),
-      uiOutput("hero_stats")
-    )
+      tags$p(
+        class = "frost-hero-tagline",
+        "Female Records & Olympic Stats Tracker"
+      )
+    ),
+
+    # Stats row — absolutely positioned at the bottom of the hero so it never
+    # participates in the flexbox flow that centers the title block above.
+    uiOutput("hero_stats")
   )
 }
 

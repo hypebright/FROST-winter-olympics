@@ -1,5 +1,5 @@
 # FROST — Build Plan
-### Female Records Of Snow & Triumph
+### Female Records & Olympic Stats Tracker
 #### Winter Olympics 2026 · Milan-Cortina · Built with R Shiny + bslib + custom SCSS
 
 ---

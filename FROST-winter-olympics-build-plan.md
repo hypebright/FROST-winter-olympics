@@ -186,15 +186,14 @@ The theme is included in the ui as follows:
 - [ x ] Confirm female athlete filtering is possible from the data
 
 ### Phase 2 — SCSS + theme setup
-- [ ] Set up `www/` folder with all partials
-- [ ] Define color tokens and typography in `_variables.scss`
-- [ ] Configure `bs_theme()` in `app.R` using custom Sass files
-- [ ] Compile and verify custom CSS loads correctly in a bare Shiny app
-- [ ] Put some boilerplate code in app.R with a variety of (empty) elements: headers, simple paragraph, simple value box
+- [ x ] Set up `www/` folder with all partials
+- [ x ] Define color tokens and typography in `defaults.scss`
+- [ x ] Configure `bs_theme()` in `app.R` using custom Sass files
+- [ x ] Compile and verify custom CSS loads correctly in a bare Shiny app
+- [ x ] Put some boilerplate code in app.R with a variety of (empty) elements: headers, simple paragraph, simple value box
 
-### Phase 3 — Layout and navigation
-- [ ] Build `page_navbar()` structure with custom styling
-- [ ] Create hero section for the Home view with summary value boxes wired up to data from ESPN
+### Phase 3 — Hero section + Home view
+- [ ] Create hero section for the Home view with summary value boxes wired up to data from ESPN and alpine styling
 - [ ] Establish responsive grid using bslib's layout system
 
 ### Phase 4 — Medal Table view

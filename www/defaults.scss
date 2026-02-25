@@ -1,0 +1,31 @@
+// www/defaults.scss — FROST
+// ─────────────────────────────────────────────────────────────────────────────
+// Bootstrap Sass variable overrides. This layer is injected BEFORE Bootstrap's
+// own variable sheet, so anything set here wins over Bootstrap's !default
+// values — no !default flag needed.
+
+// ── Typography ────────────────────────────────────────────────────────────────
+$font-family-base:       'Inter', system-ui, sans-serif;
+$font-family-sans-serif: 'Inter', system-ui, sans-serif;
+$headings-font-family:   'DM Sans', system-ui, sans-serif;
+$headings-font-weight:   700;
+
+// ── Colour — map FROST palette onto Bootstrap semantic roles ──────────────────
+$primary:    #1A3A5C;  // --frost-blue
+$secondary:  #2C3E50;  // --frost-slate
+$light:      #F8FAFC;  // --frost-snow
+$body-bg:    #F8FAFC;
+$body-color: #2C3E50;
+$link-color: #1A3A5C;
+
+// ── Shapes ────────────────────────────────────────────────────────────────────
+$border-radius:      0.75rem;
+$border-radius-lg:   1rem;
+$card-border-radius: 1rem;
+$card-border-width:  0;
+
+// ── Navbar ────────────────────────────────────────────────────────────────────
+$navbar-dark-brand-color:        #F8FAFC;
+$navbar-dark-color:              rgba(248, 250, 252, 0.8);
+$navbar-dark-hover-color:        #F8FAFC;
+$navbar-dark-active-color:       #F8FAFC;

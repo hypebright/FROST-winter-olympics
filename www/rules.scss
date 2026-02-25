@@ -1,0 +1,85 @@
+// www/rules.scss — FROST
+// ─────────────────────────────────────────────────────────────────────────────
+// Custom CSS that compiles AFTER Bootstrap. This is where FROST overrides
+// Bootstrap component defaults and adds its own design language.
+
+// ── CSS Custom Properties ─────────────────────────────────────────────────────
+// Runtime tokens — accessible in inline styles, JS, and future SCSS partials.
+:root {
+  --frost-ice: #D6EAF8;
+  --frost-blue: #1A3A5C;
+  --frost-slate: #2C3E50;
+  --frost-gold: #D4AC0D;
+  --frost-snow: #F8FAFC;
+  --frost-female: #E5B7D6;
+}
+
+// ── Navbar ────────────────────────────────────────────────────────────────────
+.navbar {
+  background-color: var(--frost-blue) !important;
+  border-bottom: 2px solid var(--frost-gold) !important;
+
+  .navbar-brand {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--frost-snow) !important;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s ease;
+    padding-top: 10px;
+  }
+}
+
+// ── Cards ─────────────────────────────────────────────────────────────────────
+.card {
+  @include frost-card;
+}
+
+// ── Value Boxes ───────────────────────────────────────────────────────────────
+.bslib-value-box {
+  border-radius: 1rem !important;
+  border: none !important;
+
+  .value-box-showcase {
+    color: var(--frost-gold);
+  }
+}
+
+// ── Headings ──────────────────────────────────────────────────────────────────
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'DM Sans', sans-serif;
+  color: var(--frost-blue);
+}
+
+// ── Scrollbar ─────────────────────────────────────────────────────────────────
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--frost-ice);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--frost-blue);
+  border-radius: 3px;
+}
+
+// ── Interactive transitions ───────────────────────────────────────────────────
+a,
+.btn {
+  transition: all 0.2s ease;
+}

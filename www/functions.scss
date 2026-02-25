@@ -1,0 +1,7 @@
+// www/functions.scss — FROST
+// ─────────────────────────────────────────────────────────────────────────────
+// This is the first layer bslib compiles, so anything placed here lands at the
+// very top of the final CSS output. Google Fonts @import MUST be here — CSS
+// @import rules are invalid if they appear after other CSS declarations.
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700&family=Inter:wght@400;500&display=swap');

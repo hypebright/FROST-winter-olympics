@@ -1,0 +1,37 @@
+// www/mixins.scss — FROST
+// ─────────────────────────────────────────────────────────────────────────────
+// Reusable SCSS mixins. Available to rules.scss and any future partial.
+
+// ── frost-card ────────────────────────────────────────────────────────────────
+// Clean white surface with a directional blue shadow and a lift on hover.
+@mixin frost-card {
+  background: white;
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px rgba(26, 58, 92, 0.08);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 8px 32px rgba(26, 58, 92, 0.14);
+    transform: translateY(-2px);
+  }
+}
+
+// ── medal-badge ───────────────────────────────────────────────────────────────
+// Circular pill for gold / silver / bronze counts or icons.
+// Usage: @include medal-badge(#D4AC0D);          → gold, white text
+//        @include medal-badge(#A8A9AD, #fff);    → silver
+//        @include medal-badge(#CD7F32);          → bronze
+@mixin medal-badge($bg, $color: white) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: $bg;
+  color: $color;
+  font-weight: 700;
+  font-size: 0.75rem;
+  line-height: 1;
+}

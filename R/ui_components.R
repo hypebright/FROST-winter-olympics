@@ -21,7 +21,7 @@ frost_hero_ui <- function() {
       class = "frost-hero-content",
       tags$p(
         class = "frost-hero-eyebrow",
-        "Milan-Cortina \u00b7 February 2026"
+        "Winter Olympics \u00b7 Milan-Cortina \u00b7 February 2026"
       ),
       tags$h1(class = "frost-hero-title", "FROST"),
       tags$p(

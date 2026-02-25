@@ -66,13 +66,13 @@ server <- function(input, output, session) {
   output$hero_stats <- renderUI({
     n_events <- nrow(female_events)
     n_disciplines <- length(unique(female_events$discipline_name))
-    n_nations <- nrow(medals_df)
+    n_nations <- length(unique((countries_df$country_id)))
 
     tags$div(
       class = "frost-stats-row",
       frost_stat(bs_icon("trophy-fill"), "Female Events", n_events),
       frost_stat(bs_icon("snow"), "Disciplines", n_disciplines),
-      frost_stat(bs_icon("globe2"), "Nations", n_nations)
+      frost_stat(bs_icon("globe2"), "Countries", n_nations)
     )
   })
 }

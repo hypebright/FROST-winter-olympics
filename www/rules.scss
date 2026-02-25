@@ -1,10 +1,8 @@
 // www/rules.scss — FROST
 // ─────────────────────────────────────────────────────────────────────────────
-// Custom CSS that compiles AFTER Bootstrap. This is where FROST overrides
-// Bootstrap component defaults and adds its own design language.
+// Custom CSS compiled AFTER Bootstrap. FROST's design language lives here.
 
 // ── CSS Custom Properties ─────────────────────────────────────────────────────
-// Runtime tokens — accessible in inline styles, JS, and future SCSS partials.
 :root {
   --frost-ice: #D6EAF8;
   --frost-blue: #1A3A5C;
@@ -12,6 +10,11 @@
   --frost-gold: #D4AC0D;
   --frost-snow: #F8FAFC;
   --frost-female: #E5B7D6;
+}
+
+// ── Base ──────────────────────────────────────────────────────────────────────
+body {
+  overflow-x: hidden;
 }
 
 // ── Navbar ────────────────────────────────────────────────────────────────────
@@ -33,8 +36,14 @@
     font-size: 1.1rem;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    transition: color 0.2s ease;
+    transition: color 0.2s ease, box-shadow 0.2s ease;
     padding-top: 10px;
+
+    &.active {
+      color: var(--frost-snow) !important;
+      // Gold underline on active tab — inset box-shadow avoids layout shift
+      box-shadow: inset 0 -2px 0 var(--frost-gold);
+    }
   }
 }
 
@@ -49,7 +58,7 @@
   border: none !important;
 
   .value-box-showcase {
-    color: var(--frost-gold);
+    color: var(--frost-gold) !important;
   }
 }
 
@@ -78,8 +87,236 @@ h6 {
   border-radius: 3px;
 }
 
-// ── Interactive transitions ───────────────────────────────────────────────────
+// ── Transitions ───────────────────────────────────────────────────────────────
 a,
 .btn {
   transition: all 0.2s ease;
+}
+
+// ── Keyframe Animations ───────────────────────────────────────────────────────
+
+// Entrance: elements slide up and fade in, used with staggered animation-delay.
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Snow: each particle drifts from above the viewport to below.
+// --drift is set per-element via nth-child so each flake takes a slightly
+// different horizontal path, giving organic motion without JavaScript.
+@keyframes snowFall {
+  0% {
+    transform: translateY(-20px) translateX(0);
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  92% {
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translateY(110vh) translateX(var(--drift, 0px));
+    opacity: 0;
+  }
+}
+
+// ── Hero ──────────────────────────────────────────────────────────────────────
+.frost-hero {
+  position: relative;
+  // Fill viewport minus approximate navbar height (56px ≈ 4rem in bslib/BS5).
+  // min-height rather than height so content can grow beyond the viewport on
+  // small screens without clipping.
+  min-height: calc(100vh - 4rem);
+  background: linear-gradient(160deg, #0a1628 0%, #122236 35%, #1A3A5C 70%, #1d4870 100%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 2rem 4.5rem;
+  // Cancel container padding on all four sides — including bottom so the
+  // tab-pane's own padding doesn't leave a white gap after the hero.
+  margin: -1.5rem;
+}
+
+// ── Snow layer ────────────────────────────────────────────────────────────────
+// 25 <span> elements, each positioned and timed with deterministic pseudo-random
+// values derived from the index. No JavaScript required.
+.frost-snow-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+
+  span {
+    position: absolute;
+    display: block;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    animation: snowFall linear infinite;
+    top: -10px;
+  }
+
+  @for $i from 1 through 25 {
+    span:nth-child(#{$i}) {
+      $size: (
+        ($i * 41) % 4) + 1; // 1–4 px
+      $pos: (
+        ($i * 137) % 97) + 1; // 2–98 %
+      $dur: (
+        ($i * 73) % 7) + 6; // 6–12 s
+      $del: -(($i * 53) % 14
+      ); // already in-flight on load
+    $opa: (
+      (($i * 17) % 4) + 2) * 0.1; // 0.2–0.5
+    $drift: (
+      ($i * 29) % 60) - 30; // −30 to +30 px horizontal drift
+
+    width: #{$size}px;
+    height: #{$size}px;
+    left: #{$pos + "%"};
+    animation-duration: #{$dur}s;
+    animation-delay: #{$del}s;
+    opacity: $opa;
+    --drift: #{$drift}px;
+  }
+}
+}
+
+// ── Hero content ──────────────────────────────────────────────────────────────
+.frost-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: 100%;
+  max-width: 860px;
+}
+
+.frost-hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--frost-gold
+  );
+margin-bottom: 1.25rem;
+animation: fadeInUp 0.7s 0.1s ease both;
+}
+
+.frost-hero-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(4.5rem, 14vw, 10rem);
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: var(--frost-snow) !important;
+  line-height: 1;
+  margin: 0 0 1.25rem;
+  // Gold glow + depth shadow — subtle at rest, creates presence
+  text-shadow:
+    0 0 80px rgba(212, 172, 13, 0.3),
+    0 4px 40px rgba(0, 0, 0, 0.4);
+  animation: fadeInUp 0.7s 0s ease both;
+}
+
+.frost-hero-tagline {
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(214, 234, 248, 0.8);
+  margin-bottom: 0;
+  animation: fadeInUp 0.7s 0.2s ease both;
+}
+
+// ── Hero stat boxes ───────────────────────────────────────────────────────────
+.frost-stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 3.5rem;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.7s 0.4s ease both;
+}
+
+.frost-stat {
+  // Equal widths: all three boxes grow from flex-basis 0, so they end up
+  // identical regardless of label length or number of digits.
+  flex: 1 1 0;
+  max-width: 200px; // cap so they don't stretch too wide on large screens
+  min-width: 130px; // minimum before the row wraps to a new line
+  text-align: center;
+  padding: 1.5rem 2.25rem;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  cursor: default;
+  transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(212, 172, 13, 0.45);
+  }
+}
+
+.frost-stat-icon {
+  color: var(--frost-gold);
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.frost-stat-value {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: var(--frost-snow);
+  line-height: 1;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.frost-stat-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(214, 234, 248, 0.65);
+  display: block;
+}
+
+// ── Placeholder panels (phases 4–6) ──────────────────────────────────────────
+.frost-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+
+  &-inner {
+    text-align: center;
+    opacity: 0.45;
+
+    h2 {
+      font-size: 1.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: var(--frost-slate);
+      margin-bottom: 0;
+    }
+  }
 }

@@ -304,7 +304,208 @@ animation: fadeInUp 0.7s 0.1s ease both;
   display: block;
 }
 
-// ── Placeholder panels (phases 4–6) ──────────────────────────────────────────
+// ── Medal Table Panel ─────────────────────────────────────────────────────────
+.frost-medal-panel {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2.5rem 1.75rem 3rem;
+}
+
+.frost-panel-header {
+  margin-bottom: 2rem;
+}
+
+.frost-panel-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--frost-gold);
+  margin-bottom: 0.4rem;
+}
+
+.frost-panel-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--frost-blue);
+  margin-bottom: 0;
+}
+
+// Controls row ----------------------------------------------------------------
+.frost-medal-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--frost-ice);
+}
+
+// Shared pill-toggle for both radio groups ------------------------------------
+// Shiny inline radioButtons renders .radio-inline > label > input[type=radio]
+.frost-toggle-group,
+.frost-sort-group {
+  .shiny-input-container {
+    margin-bottom: 0;
+  }
+
+  .shiny-options-group {
+    display: flex;
+    background: var(--frost-ice);
+    border: 1px solid rgba(26, 58, 92, 0.1);
+    border-radius: 2rem;
+    padding: 3px;
+    gap: 2px;
+  }
+
+  .radio-inline {
+    margin: 0;
+
+    label {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 1.05rem;
+      border-radius: 2rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      color: var(--frost-slate);
+      transition: background 0.18s ease, color 0.18s ease;
+      white-space: nowrap;
+      margin: 0;
+      line-height: 1.4;
+
+      input[type="radio"] {
+        display: none;
+      }
+    }
+
+    &:has(input:checked) label {
+      background: var(--frost-blue);
+      color: #fff;
+    }
+  }
+}
+
+// "Women Only" active state gets a female-accent inner glow
+.frost-toggle-group {
+  .radio-inline:last-child:has(input:checked) label {
+    background: var(--frost-blue);
+    box-shadow: inset 0 0 0 2px var(--frost-female);
+  }
+}
+
+// Medal table -----------------------------------------------------------------
+// Grid: rank | flag | country-name | G | S | B | Total
+.frost-medal-table {
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+}
+
+.frost-medal-header,
+.frost-medal-row {
+  display: grid;
+  grid-template-columns: 2rem 2.5rem 1fr 3rem 3rem 3rem 3.75rem;
+  align-items: center;
+  column-gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.frost-medal-header {
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--frost-slate);
+  opacity: 0.45;
+  border-bottom: 1px solid var(--frost-ice);
+  margin-bottom: 0.2rem;
+}
+
+.frost-medal-row {
+  border-left: 3px solid transparent;
+  border-radius: 0.6rem;
+  cursor: default;
+  animation: fadeInUp 0.35s ease both;
+  transition: background 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    background: var(--frost-ice);
+    transform: translateX(4px);
+  }
+
+  &.fmr-top-gold   { border-left-color: var(--frost-gold); }
+  &.fmr-top-silver { border-left-color: #b0b0b0; }
+  &.fmr-top-bronze { border-left-color: #cd7f32; }
+
+  &.fmr-top-gold   .fmr-rank { color: var(--frost-gold);  opacity: 1; font-size: 1rem; }
+  &.fmr-top-silver .fmr-rank { color: #9e9e9e;             opacity: 1; }
+  &.fmr-top-bronze .fmr-rank { color: #cd7f32;             opacity: 1; }
+}
+
+.fmr-rank {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--frost-slate);
+  opacity: 0.4;
+  text-align: center;
+}
+
+.fmr-flag-img {
+  width: 2rem;
+  height: 1.35rem;
+  object-fit: cover;
+  border-radius: 3px;
+  display: block;
+}
+
+.fmr-flag-abbr {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--frost-blue);
+  text-align: center;
+  display: block;
+}
+
+.fmr-country {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--frost-slate);
+}
+
+.fmr-medal-col {
+  text-align: center;
+}
+
+.fmr-medal {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  display: block;
+}
+
+.fmr-gold   { color: var(--frost-gold); }
+.fmr-silver { color: #9e9e9e; }
+.fmr-bronze { color: #cd7f32; }
+.fmr-total  { color: var(--frost-blue); font-size: 0.85rem; }
+
+// Empty / error state ---------------------------------------------------------
+.frost-no-data {
+  text-align: center;
+  padding: 3rem;
+  color: var(--frost-slate);
+  opacity: 0.4;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+// ── Placeholder panels (phases 5–6) ──────────────────────────────────────────
 .frost-placeholder {
   display: flex;
   align-items: center;

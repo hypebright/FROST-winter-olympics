@@ -63,6 +63,7 @@
 
   // Re-scan after Shiny pushes any renderUI output to the DOM.
   // The small delay lets the browser finish painting before we query.
+  // TODO: optimize by only animating new elements added since the last scan, rather than re-checking all countups.
   $(document).on('shiny:value', function () {
     setTimeout(initCountUps, 150);
   });

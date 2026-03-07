@@ -123,6 +123,7 @@ FROST/
 - Sortable by total or by medal type
 - Country flags (emoji or CDN-based)
 - Animated count-up on load via CSS/JS
+- Functional table but with Alpine look-and-feel to fit the theme
 
 ### 3. Events
 - Results browsable by sport/discipline
@@ -193,8 +194,8 @@ The theme is included in the ui as follows:
 - [ x ] Put some boilerplate code in app.R with a variety of (empty) elements: headers, simple paragraph, simple value box
 
 ### Phase 3 — Hero section + Home view
-- [ ] Create hero section for the Home view with summary value boxes wired up to data from ESPN and alpine styling
-- [ ] Establish responsive grid using bslib's layout system
+- [ x ] Create hero section for the Home view with summary value boxes wired up to data from ESPN and alpine styling
+- [ x ] Establish responsive grid using bslib's layout system
 
 ### Phase 4 — Medal Table view
 - [ ] Wire up medal data from ESPN

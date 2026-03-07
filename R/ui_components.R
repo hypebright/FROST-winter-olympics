@@ -54,7 +54,51 @@ frost_stat <- function(icon, label, value) {
   )
 }
 
-# ── Placeholder panels (phases 4–6) ───────────────────────────────────────────
+# ── Medal Table ────────────────────────────────────────────────────────────────
+
+#' Medal Table panel: dataset toggle + sort controls + server-rendered table.
+frost_medal_table_ui <- function() {
+  tags$div(
+    class = "frost-medal-panel",
+
+    # Heading
+    tags$div(
+      class = "frost-panel-header",
+      tags$p(class = "frost-panel-eyebrow", "Winter Olympics \u00b7 Milan-Cortina \u00b7 2026"),
+      tags$h2(class = "frost-panel-title", "Medal Table")
+    ),
+
+    # Controls: toggle (left) + sort (right)
+    tags$div(
+      class = "frost-medal-controls",
+      tags$div(
+        class = "frost-toggle-group",
+        radioButtons(
+          "medal_toggle",
+          label    = NULL,
+          choices  = c("All Athletes" = "all", "Women Only" = "female"),
+          selected = "all",
+          inline   = TRUE
+        )
+      ),
+      tags$div(
+        class = "frost-sort-group",
+        radioButtons(
+          "medal_sort",
+          label    = NULL,
+          choices  = c("Gold" = "gold", "Silver" = "silver", "Bronze" = "bronze", "Total" = "total"),
+          selected = "gold",
+          inline   = TRUE
+        )
+      )
+    ),
+
+    # Table rendered server-side
+    uiOutput("medal_table")
+  )
+}
+
+# ── Placeholder panels (phases 5–6) ───────────────────────────────────────────
 
 #' Minimal placeholder for nav panels not yet built.
 #'

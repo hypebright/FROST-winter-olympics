@@ -64,7 +64,10 @@ frost_medal_table_ui <- function() {
     # Heading
     tags$div(
       class = "frost-panel-header",
-      tags$p(class = "frost-panel-eyebrow", "Winter Olympics \u00b7 Milan-Cortina \u00b7 2026"),
+      tags$p(
+        class = "frost-panel-eyebrow",
+        "Winter Olympics \u00b7 Milan-Cortina \u00b7 2026"
+      ),
       tags$h2(class = "frost-panel-title", "Medal Table")
     ),
 
@@ -75,20 +78,25 @@ frost_medal_table_ui <- function() {
         class = "frost-toggle-group",
         radioButtons(
           "medal_toggle",
-          label    = NULL,
-          choices  = c("All Athletes" = "all", "Women Only" = "female"),
+          label = NULL,
+          choices = c("All Athletes" = "all", "Women Only" = "female"),
           selected = "all",
-          inline   = TRUE
+          inline = TRUE
         )
       ),
       tags$div(
         class = "frost-sort-group",
         radioButtons(
           "medal_sort",
-          label    = NULL,
-          choices  = c("Gold" = "gold", "Silver" = "silver", "Bronze" = "bronze", "Total" = "total"),
+          label = NULL,
+          choices = c(
+            "Gold" = "gold",
+            "Silver" = "silver",
+            "Bronze" = "bronze",
+            "Total" = "total"
+          ),
           selected = "gold",
-          inline   = TRUE
+          inline = TRUE
         )
       )
     ),

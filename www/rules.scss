@@ -505,7 +505,189 @@ animation: fadeInUp 0.7s 0.1s ease both;
   text-transform: uppercase;
 }
 
-// ── Placeholder panels (phases 5–6) ──────────────────────────────────────────
+// ── Events Panel ─────────────────────────────────────────────────────────────
+.frost-events-panel {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.75rem 3rem;
+}
+
+// Filters bar -----------------------------------------------------------------
+.frost-events-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--frost-ice);
+  margin-bottom: 0;
+}
+
+// Styled select inputs --------------------------------------------------------
+.frost-select-wrap {
+  .shiny-input-container {
+    margin-bottom: 0;
+  }
+
+  select.form-select {
+    background-color: var(--frost-ice);
+    border: 1px solid rgba(26, 58, 92, 0.1);
+    border-radius: 2rem;
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: var(--frost-slate);
+    padding: 0.38rem 2.25rem 0.38rem 1.1rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:focus {
+      border-color: var(--frost-blue);
+      box-shadow: 0 0 0 3px rgba(26, 58, 92, 0.1);
+      outline: none;
+    }
+  }
+
+  &.frost-select-wide select.form-select {
+    min-width: 220px;
+  }
+}
+
+// Event card grid -------------------------------------------------------------
+.frost-events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+// Individual event card -------------------------------------------------------
+.frost-event-card {
+  @include frost-card;
+  overflow: hidden;
+  border-top: 3px solid transparent;
+  display: flex;
+  flex-direction: column;
+
+  &.fec-female {
+    border-top-color: var(--frost-female);
+  }
+}
+
+// Card header: badge + event/discipline titles
+.fec-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.1rem 1.25rem 0.8rem;
+  border-bottom: 1px solid var(--frost-ice);
+}
+
+.fec-badge {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 1rem;
+  flex-shrink: 0;
+  margin-top: 3px;
+  line-height: 1.5;
+
+  &.fec-badge-w { background: var(--frost-female);  color: var(--frost-blue); }
+  &.fec-badge-m { background: #6eb5d1;               color: white; }
+  &.fec-badge-x { background: #9b89a8;               color: white; }
+}
+
+.fec-titles {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fec-event-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--frost-blue);
+  line-height: 1.3;
+}
+
+.fec-disc-name {
+  font-size: 0.67rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--frost-slate);
+  opacity: 0.5;
+  margin-top: 0.2rem;
+}
+
+// Medal result rows -----------------------------------------------------------
+.fec-results {
+  padding: 0.8rem 1.25rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  flex: 1;
+}
+
+.fec-result-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.fec-medal-icon {
+  font-size: 0.95rem;
+  width: 1.4rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.fec-flag {
+  width: 1.5rem;
+  height: 1rem;
+  object-fit: cover;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.fec-flag-abbr {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--frost-blue);
+  width: 1.5rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.fec-athlete {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--frost-slate);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.fec-score {
+  font-size: 0.72rem;
+  color: var(--frost-slate);
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.fec-empty {
+  font-size: 0.78rem;
+  color: var(--frost-slate);
+  opacity: 0.35;
+  margin: 0.25rem 0 0;
+  font-style: italic;
+}
+
+// ── Placeholder panels (phase 6) ─────────────────────────────────────────────
 .frost-placeholder {
   display: flex;
   align-items: center;

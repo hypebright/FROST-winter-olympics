@@ -198,16 +198,16 @@ The theme is included in the ui as follows:
 - [ x ] Establish responsive grid using bslib's layout system
 
 ### Phase 4 — Medal Table view
-- [ ] Wire up medal data from ESPN
-- [ ] Build sortable, filterable medal table
-- [ ] Add female/all toggle
-- [ ] Style with custom SCSS (not default bslib appearance)
+- [ x ] Wire up medal data from ESPN
+- [ x ] Build sortable, filterable medal table
+- [ x ]  Add female/all toggle
+- [ x ] Style with custom SCSS (not default bslib appearance)
 
 ### Phase 5 — Events view
-- [ ] Wire up event results data
-- [ ] Build card-based results display
-- [ ] Add sport + country filters
-- [ ] Badge female events
+- [ x ] Wire up event results data
+- [ x ] Build card-based results display
+- [ x ] Add sport + country filters
+- [ x ] Badge female events
 
 ### Phase 6 — Athletes view
 - [ ] Wire up athlete data
@@ -217,6 +217,8 @@ The theme is included in the ui as follows:
 
 ### Phase 7 — Polish
 - [ ] CSS animations (count-up, snow, hover transitions)
+- [ ] Improve loading UX with custom spinners (Alpine look)
+- [ ] Error catching with custom message
 - [ ] Responsive testing
 - [ ] Loading states and error fallbacks
 - [ ] Final SCSS cleanup and consistency pass

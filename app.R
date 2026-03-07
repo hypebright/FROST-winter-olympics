@@ -10,6 +10,15 @@ source("R/fetch_data.R")
 source("R/data_helpers.R")
 source("R/ui_components.R")
 
+# Pre-compute discipline choices at startup for the static Events selectInput.
+# fetch_disciplines() is memoised so the server's own call is instant.
+.discipline_choices <- local({
+  df <- tidy_disciplines(fetch_disciplines()) |>
+    dplyr::distinct(discipline_id, discipline_name) |>
+    dplyr::arrange(discipline_name)
+  setNames(df$discipline_id, df$discipline_name)
+})
+
 # ── Theme ──────────────────────────────────────────────────────────────────────
 theme <- bs_bundle(
   bs_theme(),
@@ -34,10 +43,7 @@ ui <- page_navbar(
 
   nav_panel("Home", frost_hero_ui()),
   nav_panel("Medal Table", frost_medal_table_ui()),
-  nav_panel(
-    "Events",
-    frost_placeholder("Events", "Results by sport and discipline")
-  ),
+  nav_panel("Events", frost_events_ui(.discipline_choices)),
   nav_panel(
     "Athletes",
     frost_placeholder("Athletes", "Female athlete spotlight")
@@ -66,7 +72,7 @@ server <- function(input, output, session) {
   # fetch_results() call so subsequent sort changes are instant.
   female_medals_rv <- reactiveVal(NULL)
 
-  observe(input$medal_toggle, {
+  observe({
     req(input$medal_toggle == "female", is.null(female_medals_rv()))
     withProgress(message = "Fetching women\u2019s results\u2026", value = 0.1, {
       results <- get_all_results(female_events)
@@ -159,6 +165,75 @@ server <- function(input, output, session) {
       tbl_header,
       do.call(tagList, tbl_rows)
     )
+  })
+
+  # ── Events ──────────────────────────────────────────────────────────────────
+  # Results are loaded per-discipline on demand. fetch_results() is memoised so
+  # switching back to a discipline that was already viewed is instant.
+  events_results_rv <- reactiveVal(NULL)
+
+  # Helper defined inside server to capture events_df, events_results_rv, session
+  load_disc_results <- function(disc_id) {
+    events_results_rv(NULL)
+    withProgress(message = "Loading results\u2026", value = 0.5, {
+      disc_evts <- dplyr::filter(events_df, discipline_id == disc_id)
+      events_results_rv(get_all_results(disc_evts))
+    })
+    # Update country filter with medal-winning countries from this discipline
+    medal_countries <- events_results_rv() |>
+      dplyr::filter(!is.na(medal)) |>
+      dplyr::distinct(country_name) |>
+      dplyr::arrange(country_name)
+    updateSelectInput(session, "events_country",
+      choices = c(
+        "All Countries" = "all",
+        setNames(medal_countries$country_name, medal_countries$country_name)
+      )
+    )
+  }
+
+  # Initial load: fires when user first navigates to Events tab
+  observe({
+    req(input$nav == "Events", is.null(events_results_rv()))
+    load_disc_results(input$events_discipline)
+  }) |>
+    bindEvent(input$nav)
+
+  # Reload when discipline selector changes
+  observe({
+    load_disc_results(input$events_discipline)
+  }) |>
+    bindEvent(input$events_discipline, ignoreInit = TRUE)
+
+  output$events_grid <- renderUI({
+    req(!is.null(events_results_rv()))
+
+    # Events for the selected discipline, filtered by gender
+    display_events <- dplyr::filter(events_df, discipline_id == input$events_discipline)
+    if (!is.null(input$events_gender) && input$events_gender != "all") {
+      display_events <- dplyr::filter(display_events, event_gender == input$events_gender)
+    }
+
+    # Country filter: keep events where the selected country won at least one medal
+    if (!is.null(input$events_country) && input$events_country != "all") {
+      medalled_events <- events_results_rv() |>
+        dplyr::filter(!is.na(medal), country_name == input$events_country) |>
+        dplyr::pull(event_id) |>
+        unique()
+      display_events <- dplyr::filter(display_events, event_id %in% medalled_events)
+    }
+
+    if (nrow(display_events) == 0) {
+      return(tags$div(
+        class = "frost-no-data",
+        tags$p("No events match the current filters.")
+      ))
+    }
+
+    cards <- lapply(seq_len(nrow(display_events)), function(i) {
+      build_event_card(display_events[i, ], events_results_rv())
+    })
+    tags$div(class = "frost-events-grid", do.call(tagList, cards))
   })
 
   # ── Hero stats ──────────────────────────────────────────────────────────────

@@ -403,6 +403,11 @@ animation: fadeInUp 0.7s 0.1s ease both;
   display: flex;
   flex-direction: column;
   overflow-x: auto;
+  // The fadeInUp animation starts rows at translateY(28px). Without clipping,
+  // that painted overflow escapes to the viewport and Safari adds a scrollbar.
+  // overflow-y: clip clips painted overflow without creating a scroll container,
+  // so the page can still scroll normally and row hover effects are unaffected.
+  overflow-y: clip;
 }
 
 .frost-medal-header,

@@ -210,18 +210,22 @@ The theme is included in the ui as follows:
 - [ x ] Badge female events
 
 ### Phase 6 — Athletes view
-- [ ] Wire up athlete data
-- [ ] Build athlete spotlight cards
-- [ ] Add filters
-- [ ] Medal icon treatment
+- [ x ] Wire up athlete data
+- [ x ] Build athlete spotlight cards
+- [ x ] Add filters
+- [ x ] Medal icon treatment
 
 ### Phase 7 — Polish
-- [ ] CSS animations (transitions when navigating from one tab to the other, other animations where appropriate)
+- [ x ] CSS animations (transitions when navigating from one tab to the other)
 - [ ] Add info button with data source information
-- [ ] Loading states: mprove loading UX with custom spinners (Alpine look)
+- [ ] Loading states: improve loading UX with custom spinners on UI elements (Alpine look)
 - [ ] Error fallbacks: error catching with custom message
+- [ ] Add a nice favicon
 - [ ] Responsive testing
 - [ ] Final SCSS cleanup and consistency pass
+
+### Wish list
+- Navigating from one tab to the other (tab pane) would be nice with some kind of swipe transition. However, both SCSS and JS don't seem to work well.
 
 ---
 

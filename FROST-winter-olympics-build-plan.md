@@ -216,11 +216,11 @@ The theme is included in the ui as follows:
 - [ ] Medal icon treatment
 
 ### Phase 7 — Polish
-- [ ] CSS animations (count-up, snow, hover transitions)
-- [ ] Improve loading UX with custom spinners (Alpine look)
-- [ ] Error catching with custom message
+- [ ] CSS animations (transitions when navigating from one tab to the other, other animations where appropriate)
+- [ ] Add info button with data source information
+- [ ] Loading states: mprove loading UX with custom spinners (Alpine look)
+- [ ] Error fallbacks: error catching with custom message
 - [ ] Responsive testing
-- [ ] Loading states and error fallbacks
 - [ ] Final SCSS cleanup and consistency pass
 
 ---

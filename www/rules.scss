@@ -687,7 +687,126 @@ animation: fadeInUp 0.7s 0.1s ease both;
   font-style: italic;
 }
 
-// ── Placeholder panels (phase 6) ─────────────────────────────────────────────
+// ── Athletes Panel ────────────────────────────────────────────────────────────
+.frost-athletes-panel {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.75rem 3rem;
+}
+
+.frost-athletes-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--frost-ice);
+}
+
+// Card grid -------------------------------------------------------------------
+.frost-athletes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 1.1rem;
+  margin-top: 2rem;
+}
+
+// Athlete card ----------------------------------------------------------------
+.frost-athlete-card {
+  @include frost-card;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.fac-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  background: var(--frost-ice);
+  border-bottom: 1px solid rgba(26, 58, 92, 0.06);
+}
+
+.fac-flag {
+  width: 2rem;
+  height: 1.35rem;
+  object-fit: cover;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.fac-flag-abbr {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--frost-blue);
+  flex-shrink: 0;
+}
+
+.fac-country {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--frost-blue);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fac-body {
+  padding: 0.9rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.fac-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--frost-blue);
+  line-height: 1.25;
+  margin: 0;
+}
+
+.fac-discipline {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--frost-slate);
+  opacity: 0.45;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fac-medals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 0.55rem;
+}
+
+// Medal dots — one per medal won, coloured by tier ----------------------------
+.fa-medal-dot {
+  display: inline-block;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 50%;
+}
+
+.fm-g {
+  background: var(--frost-gold);
+  box-shadow: 0 0 5px rgba(212, 172, 13, 0.5);
+}
+
+.fm-s { background: #a8a9ad; }
+.fm-b { background: #cd7f32; }
+
+// ── Placeholder ───────────────────────────────────────────────────────────────
 .frost-placeholder {
   display: flex;
   align-items: center;

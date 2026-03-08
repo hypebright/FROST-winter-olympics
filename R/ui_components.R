@@ -222,7 +222,72 @@ build_event_card <- function(event_row, all_results) {
   )
 }
 
-# ── Placeholder panels (phase 6) ──────────────────────────────────────────────
+# ── Athletes ───────────────────────────────────────────────────────────────────
+
+#' Athletes panel: country + discipline filters + spotlight card grid.
+#'
+#' @param female_disc_choices Named character vector of discipline names for
+#'   the filter selectInput, pre-computed at app startup.
+frost_athletes_ui <- function(female_disc_choices) {
+  tags$div(
+    class = "frost-athletes-panel",
+
+    tags$div(
+      class = "frost-panel-header",
+      tags$p(class = "frost-panel-eyebrow", "Women's Medal Spotlight"),
+      tags$h2(class = "frost-panel-title", "Athletes")
+    ),
+
+    tags$div(
+      class = "frost-athletes-filters",
+      tags$div(
+        class = "frost-select-wrap",
+        selectInput("athletes_country", label = NULL, choices = c("All Countries" = "all"))
+      ),
+      tags$div(
+        class = "frost-select-wrap frost-select-wide",
+        selectInput("athletes_discipline", label = NULL, choices = female_disc_choices)
+      )
+    ),
+
+    uiOutput("athletes_grid")
+  )
+}
+
+#' Build a single athlete spotlight card.
+#'
+#' @param row  Single-row data frame from athletes_data() reactive.
+build_athlete_card <- function(row) {
+  flag_el <- if (!is.na(row$flag_url) && nchar(row$flag_url) > 0) {
+    tags$img(class = "fac-flag", src = row$flag_url, alt = row$country_abbr %||% "")
+  } else {
+    tags$span(class = "fac-flag-abbr", row$country_abbr %||% "")
+  }
+
+  # One coloured dot per medal won — the "styled icon" treatment
+  make_dots <- function(n, cls) {
+    if (n == 0) return(list())
+    lapply(seq_len(n), function(i) tags$span(class = paste("fa-medal-dot", cls)))
+  }
+  dots <- c(make_dots(row$gold, "fm-g"), make_dots(row$silver, "fm-s"), make_dots(row$bronze, "fm-b"))
+
+  tags$div(
+    class = "frost-athlete-card",
+    tags$div(
+      class = "fac-header",
+      flag_el,
+      tags$span(class = "fac-country", row$country_name)
+    ),
+    tags$div(
+      class = "fac-body",
+      tags$p(class = "fac-name", paste(row$athlete_first %||% "", row$athlete_last %||% "")),
+      tags$p(class = "fac-discipline", row$disciplines),
+      tags$div(class = "fac-medals", do.call(tagList, dots))
+    )
+  )
+}
+
+# ── Placeholder (no longer used) ──────────────────────────────────────────────
 
 #' Minimal placeholder for nav panels not yet built.
 #'

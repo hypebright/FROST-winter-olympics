@@ -58,13 +58,28 @@ fetch_disciplines <- memoise(function() {
 
 #' Fetch results for a specific event
 #'
+#' Uses a manual in-process cache rather than memoise so that NULL responses
+#' (502 / 504 gateway errors) are never stored — failed calls are always
+#' retried on the next invocation. Successful JSON responses are cached for
+#' the lifetime of the R session.
+#'
 #' @param sport_id  ESPN sport ID (character or numeric)
 #' @param discipline_id  ESPN discipline ID (character or numeric)
 #' @param event_id  ESPN event ID (character or numeric)
-fetch_results <- memoise(function(sport_id, discipline_id, event_id) {
-  .espn_get("/results", query = list(
+.results_cache <- new.env(hash = TRUE, parent = emptyenv())
+
+fetch_results <- function(sport_id, discipline_id, event_id) {
+  key <- paste(sport_id, discipline_id, event_id, sep = "_")
+  if (exists(key, envir = .results_cache, inherits = FALSE)) {
+    return(get(key, envir = .results_cache, inherits = FALSE))
+  }
+  result <- .espn_get("/results", query = list(
     sport      = as.character(sport_id),
     discipline = as.character(discipline_id),
     event      = as.character(event_id)
   ))
-})
+  if (!is.null(result)) {
+    assign(key, result, envir = .results_cache, inherits = FALSE)
+  }
+  result
+}

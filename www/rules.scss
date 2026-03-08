@@ -441,13 +441,33 @@ animation: fadeInUp 0.7s 0.1s ease both;
     transform: translateX(4px);
   }
 
-  &.fmr-top-gold   { border-left-color: var(--frost-gold); }
-  &.fmr-top-silver { border-left-color: #b0b0b0; }
-  &.fmr-top-bronze { border-left-color: #cd7f32; }
+  &.fmr-top-gold {
+    border-left-color: var(--frost-gold);
+  }
 
-  &.fmr-top-gold   .fmr-rank { color: var(--frost-gold);  opacity: 1; font-size: 1rem; }
-  &.fmr-top-silver .fmr-rank { color: #9e9e9e;             opacity: 1; }
-  &.fmr-top-bronze .fmr-rank { color: #cd7f32;             opacity: 1; }
+  &.fmr-top-silver {
+    border-left-color: #b0b0b0;
+  }
+
+  &.fmr-top-bronze {
+    border-left-color: #cd7f32;
+  }
+
+  &.fmr-top-gold .fmr-rank {
+    color: var(--frost-gold);
+    opacity: 1;
+    font-size: 1rem;
+  }
+
+  &.fmr-top-silver .fmr-rank {
+    color: #9e9e9e;
+    opacity: 1;
+  }
+
+  &.fmr-top-bronze .fmr-rank {
+    color: #cd7f32;
+    opacity: 1;
+  }
 }
 
 .fmr-rank {
@@ -494,10 +514,22 @@ animation: fadeInUp 0.7s 0.1s ease both;
   display: block;
 }
 
-.fmr-gold   { color: var(--frost-gold); }
-.fmr-silver { color: #9e9e9e; }
-.fmr-bronze { color: #cd7f32; }
-.fmr-total  { color: var(--frost-blue); font-size: 0.85rem; }
+.fmr-gold {
+  color: var(--frost-gold);
+}
+
+.fmr-silver {
+  color: #9e9e9e;
+}
+
+.fmr-bronze {
+  color: #cd7f32;
+}
+
+.fmr-total {
+  color: var(--frost-blue);
+  font-size: 0.85rem;
+}
 
 // Empty / error state ---------------------------------------------------------
 .frost-no-data {
@@ -563,11 +595,13 @@ animation: fadeInUp 0.7s 0.1s ease both;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 1.25rem;
   margin-top: 2rem;
+  overflow-y: clip; // prevent fadeInUp from causing a page scrollbar
 }
 
 // Individual event card -------------------------------------------------------
 .frost-event-card {
   @include frost-card;
+  animation: fadeInUp 0.35s ease both;
   overflow: hidden;
   border-top: 3px solid transparent;
   display: flex;
@@ -597,9 +631,20 @@ animation: fadeInUp 0.7s 0.1s ease both;
   margin-top: 3px;
   line-height: 1.5;
 
-  &.fec-badge-w { background: var(--frost-female);  color: var(--frost-blue); }
-  &.fec-badge-m { background: #6eb5d1;               color: white; }
-  &.fec-badge-x { background: #9b89a8;               color: white; }
+  &.fec-badge-w {
+    background: var(--frost-female);
+    color: var(--frost-blue);
+  }
+
+  &.fec-badge-m {
+    background: #6eb5d1;
+    color: white;
+  }
+
+  &.fec-badge-x {
+    background: #9b89a8;
+    color: white;
+  }
 }
 
 .fec-titles {
@@ -714,11 +759,13 @@ animation: fadeInUp 0.7s 0.1s ease both;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   gap: 1.1rem;
   margin-top: 2rem;
+  overflow-y: clip; // prevent fadeInUp from causing a page scrollbar
 }
 
 // Athlete card ----------------------------------------------------------------
 .frost-athlete-card {
   @include frost-card;
+  animation: fadeInUp 0.35s ease both;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -808,8 +855,25 @@ animation: fadeInUp 0.7s 0.1s ease both;
   box-shadow: 0 0 5px rgba(212, 172, 13, 0.5);
 }
 
-.fm-s { background: #a8a9ad; }
-.fm-b { background: #cd7f32; }
+.fm-s {
+  background: #a8a9ad;
+}
+
+.fm-b {
+  background: #cd7f32;
+}
+
+// ── Staggered card entrance delays ───────────────────────────────────────────
+// Cards beyond 20 all share the 0.5s cap — avoids too-long waits on wide grids.
+@for $i from 1 through 20 {
+  .frost-events-grid>.frost-event-card:nth-child(#{$i}) {
+    animation-delay: #{($i - 1) * 0.045}s;
+  }
+
+  .frost-athletes-grid>.frost-athlete-card:nth-child(#{$i}) {
+    animation-delay: #{($i - 1) * 0.04}s;
+  }
+}
 
 // ── Placeholder ───────────────────────────────────────────────────────────────
 .frost-placeholder {

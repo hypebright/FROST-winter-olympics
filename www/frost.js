@@ -1,76 +1,25 @@
-// www/frost.js — FROST
-// Count-up animation for elements with [data-countup="N"].
-// Fires when the element enters the viewport (IntersectionObserver) so the
-// animation is always visible, even if the stats are below the fold.
-// Shiny's shiny:value event re-scans after every renderUI update.
+// www/frost.js — FROST count-up animation
+// Animates [data-countup="N"] elements when they enter the viewport.
 
-(function () {
-  'use strict';
+function animateCount(el) {
+  var target = +el.dataset.countup;
+  el.removeAttribute('data-countup');
+  var start = performance.now();
+  (function frame(now) {
+    var t = Math.min((now - start) / 1400, 1);
+    el.textContent = Math.round((1 - Math.pow(1 - t, 3)) * target);
+    if (t < 1) requestAnimationFrame(frame);
+  })(performance.now());
+}
 
-  // Ease-out cubic: fast start, gentle finish — more satisfying than linear.
-  function easeOutCubic(t) {
-    return 1 - Math.pow(1 - t, 3);
-  }
-
-  function animateCount(el) {
-    var target = parseInt(el.getAttribute('data-countup'), 10);
-    if (isNaN(target)) return;
-
-    // Remove attribute immediately to prevent the observer from re-triggering
-    // on the same element if initCountUps() is called again.
-    el.removeAttribute('data-countup');
-    el.textContent = '0';
-
-    var duration = 1400; // ms
-    var start = performance.now();
-
-    function frame(now) {
-      var progress = Math.min((now - start) / duration, 1);
-      el.textContent = Math.round(easeOutCubic(progress) * target);
-      if (progress < 1) {
-        requestAnimationFrame(frame);
-      } else {
-        el.textContent = target; // guarantee exact final value
-      }
-    }
-
-    requestAnimationFrame(frame);
-  }
-
-  function initCountUps() {
-    var els = document.querySelectorAll('[data-countup]');
-    if (!els.length) return;
-
-    if ('IntersectionObserver' in window) {
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            animateCount(entry.target);
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.3 });
-
-      els.forEach(function (el) { observer.observe(el); });
-    } else {
-      // Graceful fallback for browsers without IntersectionObserver
-      els.forEach(function (el) {
-        el.textContent = el.getAttribute('data-countup');
-        el.removeAttribute('data-countup');
-      });
-    }
-  }
-
-  // Re-scan after Shiny pushes any renderUI output to the DOM.
-  // The small delay lets the browser finish painting before we query.
-  // TODO: optimize by only animating new elements added since the last scan, rather than re-checking all countups.
-  $(document).on('shiny:value', function () {
-    setTimeout(initCountUps, 150);
+function initCountUps() {
+  document.querySelectorAll('[data-countup]').forEach(function(el) {
+    new IntersectionObserver(function(entries, obs) {
+      if (entries[0].isIntersecting) { animateCount(el); obs.disconnect(); }
+    }, { threshold: 0.3 }).observe(el);
   });
+}
 
-  // Also handle elements already in the DOM at connection time.
-  $(document).on('shiny:connected', function () {
-    setTimeout(initCountUps, 200);
-  });
-
-}());
+$(document).on('shiny:connected shiny:value', function() {
+  setTimeout(initCountUps, 150);
+});

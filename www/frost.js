@@ -21,6 +21,10 @@ function initCountUps() {
   });
 }
 
-$(document).on('shiny:connected shiny:value shown.bs.tab', function() {
+$(document).on('shiny:value', function(e) {
+  if (e.name === 'hero_stats') setTimeout(initCountUps, 150);
+});
+
+$(document).on('shown.bs.tab', function() {
   setTimeout(initCountUps, 150);
 });
